@@ -1,0 +1,27 @@
+# LaTeX build artefacts
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+
+# Output PDFs (keep example.pdf if committed intentionally)
+examples/*.pdf
+!examples/example.pdf
+
+# Rendered diagrams (these are generated — don't commit them)
+examples/diagrams/*.pdf
+examples/diagrams/*.svg
+examples/diagrams/*.png
+
+# macOS
+.DS_Store
+
+# Node (if someone runs npm install locally)
+node_modules/

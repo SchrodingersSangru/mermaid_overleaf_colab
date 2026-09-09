@@ -1,0 +1,18 @@
+sequenceDiagram
+    actor U as User
+    participant B as Browser
+    participant A as App Server
+    participant O as OAuth Provider
+
+    U->>B: Click "Login with Google"
+    B->>A: GET /auth/start
+    A->>B: Redirect to OAuth URL
+    B->>O: GET /authorize?client_id=...
+    O->>U: Show consent screen
+    U->>O: Approve
+    O->>B: Redirect with code=XYZ
+    B->>A: GET /callback?code=XYZ
+    A->>O: POST /token (code + secret)
+    O->>A: access_token + id_token
+    A->>B: Set session cookie
+    B->>U: Dashboard loaded

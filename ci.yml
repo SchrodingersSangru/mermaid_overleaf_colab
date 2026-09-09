@@ -1,0 +1,50 @@
+name: CI — Compile LaTeX Examples
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  compile:
+    name: Compile example.tex
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install TeX Live
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: examples/example.tex
+          latexmk_use_lualatex: false
+          latexmk_use_xelatex: false
+          extra_packages: >
+            tcolorbox
+            adjustbox
+            mdframed
+            environ
+            listings
+            caption
+            float
+            xkeyval
+            xcolor
+            tikz
+            etoolbox
+            ifthen
+            geometry
+            microtype
+            hyperref
+          args: >
+            -pdf
+            -interaction=nonstopmode
+            -output-directory=examples
+
+      - name: Upload compiled PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: example-pdf
+          path: examples/example.pdf
+          retention-days: 30

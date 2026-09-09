@@ -1,0 +1,105 @@
+The LaTeX Project Public License
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+LPPL Version 1.3c  2008-05-04
+
+Copyright 2026 mermaid-overleaf contributors
+
+Everyone is permitted to copy and distribute verbatim copies of this
+license document, but changing it is not allowed.
+
+PREAMBLE
+========
+
+The LaTeX Project Public License (LPPL) is the primary license under
+which the LaTeX kernel and the base LaTeX packages are distributed.
+
+You may use this software and exert all the rights granted to you by the
+LPPL as listed below, as long as you comply with the conditions of the
+LPPL.
+
+This license is also available as the file LPPL.TXT in any
+distribution of LaTeX version 2003/12/01 or later.
+
+CONDITIONS ON DISTRIBUTION AND MODIFICATION
+===========================================
+
+1. Activities other than distribution and/or modification of the Work
+are not covered by this license; they are outside its scope.  In
+particular, the act of running the Work is not restricted and no
+requirements are made concerning any offers of support for the Work.
+
+2. You may distribute a complete, unmodified copy of the Work as you
+received it.  Distribution of only part of the Work is considered
+modification of the Work, and no right to distribute such a Derived Work
+may be assumed under the terms of this clause.
+
+3. You may distribute a Compiled Work that has been generated from a
+complete, unmodified copy of the Work.  If you distribute a Compiled Work
+produced from a Work under a version of the LPPL, you must ensure that
+the Compiled Work is not itself a Work under this license.
+
+4. If you are the Current Maintainer of the Work, you may, without
+restriction, modify the Work, thus creating a Derived Work.  You may also
+distribute the Derived Work.
+
+5. If you are not the Current Maintainer of the Work, you may modify your
+copy of the Work, thus creating a Derived Work based on the Work, and
+compile this Derived Work, thus creating a Compiled Work based on the
+Derived Work.
+
+6. If you are not the Current Maintainer of the Work, you may distribute
+a Derived Work provided the following conditions are met for every
+component of the Work unless that component clearly states in the
+copyright notice that it is placed in the public domain:
+
+   a. If a component of this Derived Work can be a direct replacement for
+      a component of the Work when that component is used with the Base
+      Interpreter, then, wherever this component of the Work identifies
+      itself to the user when used interactively with that Base
+      Interpreter, the replacement component of this Derived Work
+      clearly and unambiguously identifies itself as a modified version
+      of this component to the user when used interactively with that
+      Base Interpreter.
+
+   b. Every component of the Derived Work contains prominent notices
+      detailing the nature of the changes to that component, or a
+      reference to another file that describes the nature of the changes
+      to that component.
+
+   c. Every component of the Derived Work is distributed under this
+      License.
+
+   d. Every component of the Derived Work is distributed with a copy of
+      the Work, or the location of a publicly accessible copy of the Work.
+
+7. If you distribute a Derived Work, you may at your option also
+distribute the components of the Derived Work individually provided that:
+
+   a. at least one component of the Derived Work refers to the Work, and
+
+   b. a recipient of the components has the ability to assemble a
+      complete Derived Work from the components and a complete, unmodified
+      copy of the Work.
+
+8. Each time you distribute the Work (or a Derived Work), the recipient
+automatically receives a license from the Original Maintainer to carry
+out activities with the Work under the terms of this license.
+
+9. If any portion of this license is not valid or enforceable under
+applicable law, this shall not affect the validity or enforceability of
+the remainder of this license, and without further action by the parties
+to this agreement, such portion shall be reformed to the minimum extent
+necessary to make such portion valid and enforceable.
+
+10. No action arising out of or relating to this license may be brought
+by you more than one year after you first became aware of a breach of
+this license by a party to this agreement.
+
+11. THIS WORK IS PROVIDED BY THE COPYRIGHT HOLDER "AS IS", WITHOUT
+WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+LIMITED TO, THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE WORK OR THE USE OR OTHER DEALINGS IN THE WORK.
