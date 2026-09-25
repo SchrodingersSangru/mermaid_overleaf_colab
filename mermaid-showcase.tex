@@ -1,0 +1,1089 @@
+% ================================================================
+%  mermaid-showcase.tex
+%  A richly illustrated document using mermaid-overleaf.sty
+%  hosted on GitHub.
+%
+%  HOW TO COMPILE ON OVERLEAF
+%  ─────────────────────────────────────────────────────────────
+%  1. Create a new Overleaf project.
+%  2. In the left sidebar click  New File  →  From External URL
+%     and paste:
+%       https://raw.githubusercontent.com/YOUR-USERNAME/mermaid-overleaf/main/mermaid-overleaf.sty
+%     Save it as  mermaid-overleaf.sty
+%  3. Upload this file (mermaid-showcase.tex) as your main file.
+%  4. Set the compiler to  pdfLaTeX  and hit Compile.
+%     Everything renders without shell-escape or any extra tools.
+%
+%  To promote a listing to a real rendered diagram:
+%    • Paste the Mermaid source into https://mermaid.live
+%    • Export as PDF → upload to Overleaf → add  image={file.pdf}
+%      to the environment options.
+% ================================================================
+
+\documentclass[12pt, a4paper]{article}
+
+% ── Load mermaid-overleaf from your GitHub repo ──────────────
+% (After adding it as a linked file via "From External URL")
+\usepackage[theme=ocean]{mermaid-overleaf}
+
+% ── Document packages ─────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=2.2cm, top=2.5cm, bottom=2.8cm]{geometry}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{parskip}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+
+% ── Hyperref colours ──────────────────────────────────────────
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = {mmd-ocean-frame},
+  urlcolor   = {mmd-ocean-accent},
+  citecolor  = {mmd-forest-frame},
+  pdftitle   = {Mermaid Diagrams Showcase},
+  pdfauthor  = {mermaid-overleaf},
+}
+
+% ── Section styling ───────────────────────────────────────────
+\titleformat{\section}
+  {\large\bfseries\sffamily\color{mmd-ocean-frame}}
+  {\thesection}{1em}{}[\color{mmd-ocean-accent}\titlerule]
+
+\titleformat{\subsection}
+  {\normalsize\bfseries\sffamily\color{mmd-forest-frame}}
+  {\thesubsection}{0.8em}{}
+
+% ── Header / footer ───────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small\sffamily\color{mmd-ocean-frame} Mermaid Diagrams Showcase}
+\fancyhead[R]{\small\sffamily\color{mmd-ocean-cmt} \texttt{mermaid-overleaf} · GitHub}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrule}{\color{mmd-ocean-accent}\hrule width\headwidth height\headrulewidth}
+
+% ── Convenience macro: coloured term in prose ─────────────────
+\newcommand{\term}[1]{{\sffamily\bfseries\color{mmd-ocean-kw}#1}}
+\newcommand{\pkg}[1]{{\ttfamily\color{mmd-ocean-accent}#1}}
+
+% =============================================================
+\begin{document}
+% =============================================================
+
+% ── Title page ───────────────────────────────────────────────
+\begin{titlepage}
+  \centering
+  \vspace*{3cm}
+
+  {\fontsize{36}{42}\selectfont\sffamily\bfseries
+   \textcolor{mmd-ocean-frame}{Mermaid}
+   \textcolor{mmd-ocean-accent}{Diagrams}\\[0.3em]
+   \textcolor{mmd-forest-frame}{Showcase}}
+
+  \vspace{1em}
+  {\large\sffamily\color{mmd-ocean-cmt}
+    A complete gallery of diagram types, themes, and use-cases\\
+    compiled entirely on cloud Overleaf}
+
+  \vspace{2.5cm}
+
+  \begin{tcolorbox}[
+      enhanced,
+      colback=mmd-ocean-bg,
+      colframe=mmd-ocean-frame,
+      boxrule=1.5pt,
+      arc=8pt,
+      width=0.72\textwidth,
+      halign=center,
+      fontupper=\sffamily,
+  ]
+    {\color{mmd-ocean-kw}\bfseries Package:}\enspace
+    {\color{mmd-ocean-str}\ttfamily mermaid-overleaf}\\[4pt]
+    {\color{mmd-ocean-kw}\bfseries Hosted at:}\enspace
+    {\color{mmd-ocean-accent}\ttfamily github.com/YOUR-USERNAME/mermaid-overleaf}\\[4pt]
+    {\color{mmd-ocean-kw}\bfseries Themes:}\enspace
+    {\color{mmd-ocean-str}ocean · forest · sunset · arctic · midnight}\\[4pt]
+    {\color{mmd-ocean-kw}\bfseries Compiled with:}\enspace
+    {\color{mmd-ocean-str}pdfLaTeX on Overleaf — no shell-escape}
+  \end{tcolorbox}
+
+  \vspace{2cm}
+  {\small\sffamily\color{mmd-ocean-cmt} \today}
+
+  \vfill
+
+  \MermaidWorkflow
+\end{titlepage}
+
+% ── Table of contents ─────────────────────────────────────────
+\tableofcontents
+\newpage
+
+% =============================================================
+\section{Flowcharts}
+% =============================================================
+
+Flowcharts describe process logic with nodes and directed edges.
+The \pkg{mermaid-overleaf} package renders the source in a
+syntax-highlighted listing with a coloured frame — switch the
+\term{theme} option per diagram for variety.
+
+% ── 1. CI/CD pipeline ────────────────────────────────────────
+\begin{mermaid}[
+    type    = flowchart,
+    theme   = ocean,
+    caption = {Continuous integration and deployment pipeline},
+    label   = {fig:cicd},
+    width   = 0.92\linewidth
+]
+flowchart TD
+    A([Developer Push]) --> B[GitHub Actions triggered]
+    B --> C{Branch?}
+
+    C -->|main| D[Run full test suite]
+    C -->|feature/*| E[Run unit tests only]
+    C -->|hotfix/*| F[Run smoke tests]
+
+    D --> G{All tests pass?}
+    E --> G
+    F --> G
+
+    G -->|No| H[/Notify team via Slack/]
+    G -->|Yes| I[Build Docker image]
+
+    I --> J[Push to container registry]
+    J --> K{Environment}
+
+    K -->|Staging| L[Deploy to staging]
+    K -->|Production| M{Manual approval?}
+
+    L --> N[Run E2E tests]
+    N -->|Pass| O([Ready for prod])
+    N -->|Fail| H
+
+    M -->|Approved| P[Blue-green deploy]
+    M -->|Rejected| Q([Hold])
+    P --> R[Health check]
+    R -->|OK| S([Live in production])
+    R -->|Fail| T[Rollback]
+    T --> H
+\end{mermaid}
+
+% ── 2. Microservice data flow ─────────────────────────────────
+\begin{mermaid}[
+    type    = flowchart,
+    theme   = midnight,
+    caption = {E-commerce microservice data-flow — left to right},
+    label   = {fig:microservice},
+    width   = \linewidth
+]
+flowchart LR
+    subgraph Clients["🌐 Clients"]
+        WEB[Web Browser]
+        MOB[Mobile App]
+        EXT[Third-party API]
+    end
+
+    subgraph Edge["⚡ Edge Layer"]
+        GW[API Gateway]
+        LB[Load Balancer]
+        RL[Rate Limiter]
+    end
+
+    subgraph Core["🔧 Core Services"]
+        AUTH[Auth Service]
+        PROD[Product Service]
+        ORD[Order Service]
+        PAY[Payment Service]
+        NOTIF[Notification Service]
+    end
+
+    subgraph Data["🗄 Data Layer"]
+        PGAUTH[(Auth DB)]
+        PGPROD[(Product DB)]
+        PGORD[(Order DB)]
+        REDIS[(Redis Cache)]
+        S3[(S3 Storage)]
+        QUEUE[[Message Queue]]
+    end
+
+    WEB & MOB & EXT --> GW
+    GW --> LB --> RL
+    RL --> AUTH & PROD & ORD
+    AUTH --> PGAUTH
+    PROD --> PGPROD & REDIS & S3
+    ORD --> PGORD & REDIS
+    ORD --> PAY
+    PAY --> QUEUE
+    QUEUE --> NOTIF
+    ORD --> QUEUE
+\end{mermaid}
+
+% ── 3. Decision tree ──────────────────────────────────────────
+\begin{mermaid}[
+    type    = flowchart,
+    theme   = forest,
+    caption = {Machine learning model selection decision tree},
+    label   = {fig:mlselect},
+    width   = 0.88\linewidth
+]
+flowchart TD
+    S([Start: choose a model]) --> Q1{Labelled data available?}
+
+    Q1 -->|Yes| Q2{Problem type?}
+    Q1 -->|No|  Q3{Goal?}
+
+    Q2 -->|Classification| Q4{Large dataset?}
+    Q2 -->|Regression|     Q5{Non-linear?}
+    Q2 -->|Sequence|       RNN[RNN / LSTM / Transformer]
+
+    Q4 -->|Yes| RF[Random Forest\nor XGBoost]
+    Q4 -->|No|  SVM[SVM or Logistic Regression]
+
+    Q5 -->|Yes| NN[Neural Network\nRegressor]
+    Q5 -->|No|  LR[Linear Regression\nor Ridge]
+
+    Q3 -->|Discover structure| CL{High dimensions?}
+    Q3 -->|Generate data|      GEN[GAN / VAE / Diffusion]
+    Q3 -->|Learn to act|       RL[Reinforcement Learning]
+
+    CL -->|Yes| AE[Autoencoder\nor t-SNE]
+    CL -->|No|  KM[K-Means\nor DBSCAN]
+\end{mermaid}
+
+% =============================================================
+\section{Sequence Diagrams}
+% =============================================================
+
+Sequence diagrams capture time-ordered interactions between
+participants. They are especially valuable for documenting APIs,
+authentication flows, and distributed-system protocols.
+
+% ── 4. JWT auth flow ─────────────────────────────────────────
+\begin{mermaid}[
+    type    = sequence,
+    theme   = sunset,
+    caption = {JWT authentication and token-refresh flow},
+    label   = {fig:jwt},
+    width   = 0.92\linewidth
+]
+sequenceDiagram
+    actor     U  as 👤 User
+    participant C  as 🖥 Client App
+    participant A  as 🔐 Auth Server
+    participant R  as 🗃 Resource API
+    participant DB as 🗄 Database
+
+    U  ->> C  : Enter credentials
+    C  ->> A  : POST /auth/login {email, password}
+    A  ->> DB : SELECT user WHERE email=?
+    DB -->> A : User record + hashed password
+
+    alt Credentials valid
+        A  ->> A  : Generate access_token (15 min)
+        A  ->> A  : Generate refresh_token (7 days)
+        A  -->> C : 200 OK {access_token, refresh_token}
+        C  ->> C  : Store tokens securely
+        C  -->> U : Dashboard
+    else Invalid credentials
+        A  -->> C : 401 Unauthorized
+        C  -->> U : Show error message
+    end
+
+    Note over C,R: Later — making an API call
+
+    C  ->> R  : GET /api/orders (Bearer: access_token)
+    R  ->> A  : Verify token signature
+    A  -->> R : Token valid, claims: {userId, roles}
+    R  ->> DB : SELECT orders WHERE userId=?
+    DB -->> R : Order rows
+    R  -->> C : 200 OK {orders: [...]}
+
+    Note over C,A: Token expires — silent refresh
+
+    C  ->> A  : POST /auth/refresh {refresh_token}
+    A  ->> A  : Verify refresh token, rotate it
+    A  -->> C : 200 OK {new access_token, new refresh_token}
+\end{mermaid}
+
+% ── 5. Distributed transaction (Saga pattern) ─────────────────
+\begin{mermaid}[
+    type    = sequence,
+    theme   = midnight,
+    caption = {Saga pattern — distributed order transaction with compensations},
+    label   = {fig:saga},
+    width   = \linewidth
+]
+sequenceDiagram
+    participant ORC as 🎭 Saga Orchestrator
+    participant ORD as 📦 Order Service
+    participant INV as 🏭 Inventory Service
+    participant PAY as 💳 Payment Service
+    participant SHP as 🚚 Shipping Service
+
+    ORC ->> ORD : createOrder(items, userId)
+    ORD -->> ORC : orderId=7842, status=PENDING
+
+    ORC ->> INV : reserveItems(orderId, items)
+
+    alt Items available
+        INV -->> ORC : reserved=true, reservationId=R99
+
+        ORC ->> PAY : chargeCustomer(orderId, amount)
+
+        alt Payment succeeds
+            PAY -->> ORC : charged=true, txId=TX-44
+
+            ORC ->> SHP : scheduleShipment(orderId)
+            SHP -->> ORC : shipmentId=SH-21, eta=2d
+
+            ORC ->> ORD : updateStatus(CONFIRMED)
+            ORD -->> ORC : ✅ Order confirmed
+
+        else Payment fails
+            PAY -->> ORC : charged=false, reason=DECLINED
+            Note over ORC: Begin compensation
+            ORC ->> INV : releaseReservation(R99)
+            INV -->> ORC : released
+            ORC ->> ORD : updateStatus(CANCELLED)
+            ORD -->> ORC : ❌ Order cancelled
+        end
+
+    else Items unavailable
+        INV -->> ORC : reserved=false, reason=OUT_OF_STOCK
+        ORC ->> ORD : updateStatus(FAILED)
+        ORD -->> ORC : ❌ Order failed — stock
+    end
+\end{mermaid}
+
+% =============================================================
+\section{Gantt Charts}
+% =============================================================
+
+Gantt charts map tasks onto a timeline with dependencies,
+milestones, and parallel work streams.  The \term{sunset} theme
+gives warm, high-contrast bars ideal for printed schedules.
+
+% ── 6. Full product launch plan ───────────────────────────────
+\begin{mermaid}[
+    type    = gantt,
+    theme   = sunset,
+    caption = {SaaS product launch — 16-week roadmap with milestones},
+    label   = {fig:launch},
+    width   = \linewidth
+]
+gantt
+    title       SaaS Product Launch — Q3/Q4 2026
+    dateFormat  YYYY-MM-DD
+    excludes    weekends
+
+    section Discovery
+        Stakeholder interviews      :done,     s1, 2026-07-01, 10d
+        Competitor analysis         :done,     s2, after s1,  8d
+        Requirements workshop       :done,     s3, after s2,  5d
+        Spec freeze                 :milestone,    after s3,  0d
+
+    section Design
+        Information architecture    :done,     d1, 2026-07-20, 8d
+        Low-fi wireframes           :done,     d2, after d1,  6d
+        High-fi UI design           :active,   d3, after d2,  12d
+        Design system tokens        :active,   d4, 2026-08-01, 10d
+        Usability testing           :          d5, after d3,  5d
+        Design sign-off             :milestone,    after d5,  0d
+
+    section Engineering — Backend
+        Database schema             :done,     e1, 2026-07-15, 6d
+        Auth service                :done,     e2, after e1,  8d
+        Core API v1                 :active,   e3, after e2,  14d
+        Payment integration         :          e4, after e3,  10d
+        Admin dashboard API         :          e5, after e4,  8d
+
+    section Engineering — Frontend
+        Component library           :active,   f1, 2026-08-04, 10d
+        Auth UI flows               :          f2, after f1,  6d
+        Main product screens        :          f3, after f2,  12d
+        Billing & settings UI       :          f4, after f3,  8d
+
+    section QA & Launch
+        Internal beta               :crit,     q1, 2026-09-22, 8d
+        Beta feedback & fixes       :crit,     q2, after q1,  10d
+        Performance testing         :crit,     q3, after q2,  5d
+        Security audit              :crit,     q4, 2026-10-10, 7d
+        Soft launch                 :milestone,    2026-10-20, 0d
+        Marketing push              :          m1, 2026-10-20, 14d
+        Public launch               :milestone,    2026-11-03, 0d
+\end{mermaid}
+
+% =============================================================
+\section{Class Diagrams}
+% =============================================================
+
+Class diagrams express object-oriented domain models — classes,
+attributes, methods, and their relationships.
+
+% ── 7. Hospital management domain ────────────────────────────
+\begin{mermaid}[
+    type    = class,
+    theme   = arctic,
+    caption = {Hospital management system — domain class model},
+    label   = {fig:hospital},
+    width   = \linewidth
+]
+classDiagram
+    direction TB
+
+    class Person {
+        <<abstract>>
+        +int id
+        +string firstName
+        +string lastName
+        +Date dateOfBirth
+        +string email
+        +fullName() string
+        +age() int
+    }
+
+    class Patient {
+        +string nhsNumber
+        +BloodType bloodType
+        +List~Allergy~ allergies
+        +register()
+        +getRecords() List~MedicalRecord~
+    }
+
+    class Doctor {
+        +string licenseNumber
+        +string specialisation
+        +List~Qualification~ qualifications
+        +isAvailable(Date) bool
+        +prescribe(Patient, Drug) Prescription
+    }
+
+    class Nurse {
+        +string ward
+        +string shift
+        +administerMedication(Patient, Prescription)
+    }
+
+    class Appointment {
+        +int id
+        +DateTime scheduledAt
+        +string status
+        +string notes
+        +cancel()
+        +reschedule(DateTime)
+    }
+
+    class MedicalRecord {
+        +int id
+        +Date date
+        +string diagnosis
+        +string treatment
+        +List~Prescription~ prescriptions
+    }
+
+    class Prescription {
+        +string drugName
+        +float dosageMg
+        +int frequencyPerDay
+        +int durationDays
+        +isExpired() bool
+    }
+
+    class Ward {
+        +string name
+        +int capacity
+        +int currentOccupancy
+        +hasAvailableBed() bool
+        +admitPatient(Patient)
+    }
+
+    Person  <|-- Patient      : extends
+    Person  <|-- Doctor       : extends
+    Person  <|-- Nurse        : extends
+    Patient "1" --> "0..*" Appointment   : books
+    Doctor  "1" --> "0..*" Appointment   : attends
+    Patient "1" *-- "0..*" MedicalRecord : has
+    Doctor  "1" --> "0..*" Prescription  : writes
+    MedicalRecord "1" *-- "0..*" Prescription : includes
+    Nurse   "many" --> "1" Ward          : works in
+    Patient "0..*" --> "0..1" Ward       : admitted to
+\end{mermaid}
+
+% =============================================================
+\section{State Diagrams}
+% =============================================================
+
+State diagrams show how an entity moves through states in
+response to events.  Nested states cleanly capture sub-processes.
+
+% ── 8. Subscription billing lifecycle ────────────────────────
+\begin{mermaid}[
+    type    = state,
+    theme   = forest,
+    caption = {SaaS subscription billing state machine with nested states},
+    label   = {fig:subscription},
+    width   = 0.90\linewidth
+]
+stateDiagram-v2
+    [*] --> Onboarding : User signs up
+
+    state Onboarding {
+        [*]             --> EmailVerification
+        EmailVerification --> ProfileSetup : Email confirmed
+        ProfileSetup    --> [*]            : Profile complete
+    }
+
+    Onboarding --> FreeTrial : Profile complete
+
+    state FreeTrial {
+        [*]          --> TrialActive
+        TrialActive  --> TrialExpired : 14 days elapsed
+        TrialActive  --> [*]         : User upgrades
+        TrialExpired --> [*]
+    }
+
+    FreeTrial --> Active       : Subscribed (trial or direct)
+    FreeTrial --> Churned      : Trial ended, no upgrade
+
+    state Active {
+        [*]        --> CurrentPeriod
+        CurrentPeriod --> Renewing   : Period ends, payment OK
+        Renewing   --> CurrentPeriod : Renewed
+        CurrentPeriod --> PastDue    : Payment failed
+    }
+
+    Active  --> PastDue    : Payment failed
+    PastDue --> Active     : Payment recovered (grace 7d)
+    PastDue --> Suspended  : Grace period expired
+
+    Suspended --> Active   : Payment recovered
+    Suspended --> Churned  : 30 days suspended
+
+    Active    --> Cancelled : User cancels
+    Cancelled --> Active    : User re-subscribes (within 30d)
+    Cancelled --> Churned   : 30 days passed
+
+    Churned   --> [*]
+\end{mermaid}
+
+% =============================================================
+\section{Entity-Relationship Diagrams}
+% =============================================================
+
+ER diagrams specify database schemas — entities, attributes,
+primary and foreign keys, and cardinality.
+
+% ── 9. Multi-tenant SaaS database ────────────────────────────
+\begin{mermaid}[
+    type    = er,
+    theme   = midnight,
+    caption = {Multi-tenant SaaS platform — full database schema},
+    label   = {fig:schema},
+    width   = \linewidth
+]
+erDiagram
+    ORGANISATION {
+        uuid   id           PK
+        string name
+        string slug
+        string plan
+        date   createdAt
+        bool   isActive
+    }
+    USER {
+        uuid   id           PK
+        uuid   orgId        FK
+        string email
+        string hashedPwd
+        string role
+        date   lastLoginAt
+    }
+    PROJECT {
+        uuid   id           PK
+        uuid   orgId        FK
+        uuid   ownerId      FK
+        string name
+        string status
+        date   deadline
+    }
+    TASK {
+        uuid   id           PK
+        uuid   projectId    FK
+        uuid   assigneeId   FK
+        string title
+        string priority
+        string status
+        date   dueDate
+    }
+    COMMENT {
+        uuid   id           PK
+        uuid   taskId       FK
+        uuid   authorId     FK
+        text   body
+        date   createdAt
+    }
+    LABEL {
+        uuid   id           PK
+        uuid   orgId        FK
+        string name
+        string colourHex
+    }
+    ATTACHMENT {
+        uuid   id           PK
+        uuid   taskId       FK
+        string fileName
+        string s3Key
+        int    sizeBytes
+    }
+    AUDIT_LOG {
+        uuid   id           PK
+        uuid   userId       FK
+        string action
+        json   payload
+        date   occurredAt
+    }
+
+    ORGANISATION ||--o{ USER       : "has members"
+    ORGANISATION ||--o{ PROJECT    : "owns"
+    ORGANISATION ||--o{ LABEL      : "defines"
+    USER         ||--o{ PROJECT    : "owns"
+    PROJECT      ||--o{ TASK       : "contains"
+    USER         ||--o{ TASK       : "assigned"
+    TASK         ||--o{ COMMENT    : "has"
+    USER         ||--o{ COMMENT    : "writes"
+    TASK         }o--o{ LABEL      : "tagged"
+    TASK         ||--o{ ATTACHMENT : "has"
+    USER         ||--o{ AUDIT_LOG  : "generates"
+\end{mermaid}
+
+% =============================================================
+\section{Timeline}
+% =============================================================
+
+% ── 10. History of programming languages ─────────────────────
+\begin{mermaid}[
+    type    = timeline,
+    theme   = ocean,
+    caption = {History of programming languages — key milestones},
+    label   = {fig:lang-history},
+    width   = \linewidth
+]
+timeline
+    title  The History of Programming Languages
+    section 1950s
+        1957 : Fortran — first compiled language
+             : COBOL design begins
+        1958 : LISP — symbolic computation
+             : ALGOL 58 — structured programming
+    section 1960s–70s
+        1964 : BASIC — beginners' language
+        1972 : C — systems programming
+             : Prolog — logic programming
+        1975 : Scheme — minimalist LISP
+    section 1980s
+        1980 : Smalltalk 80 — objects everywhere
+        1983 : C++ — C with classes
+        1987 : Perl — text processing powerhouse
+        1989 : Python conception
+    section 1990s
+        1991 : Python 0.9 released publicly
+        1993 : Ruby created by Matz
+        1995 : Java — write once, run anywhere
+             : JavaScript — born in 10 days
+             : PHP — web scripting
+    section 2000s
+        2001 : C# and .NET framework
+        2003 : Scala — functional JVM language
+        2007 : Clojure — LISP for the JVM
+        2009 : Go — concurrency for cloud
+             : Node.js — JS on the server
+    section 2010s
+        2011 : Kotlin — modern JVM language
+        2012 : TypeScript — typed JavaScript
+        2014 : Swift — Apple's modern language
+             : Rust — memory-safe systems lang
+    section 2020s
+        2020 : Zig gaining traction
+        2022 : Carbon — experimental C++ successor
+        2024 : Mojo — AI/ML systems language
+        2025 : AI-assisted language design era
+\end{mermaid}
+
+% =============================================================
+\section{Mind Maps}
+% =============================================================
+
+% ── 11. Cloud architecture mindmap ────────────────────────────
+\begin{mermaid}[
+    type    = mindmap,
+    theme   = forest,
+    caption = {Cloud-native architecture concept map},
+    label   = {fig:cloudmind},
+    width   = \linewidth
+]
+mindmap
+  root((Cloud Native Architecture))
+    Compute
+      Containers
+        Docker
+        Podman
+      Orchestration
+        Kubernetes
+        Nomad
+      Serverless
+        AWS Lambda
+        Cloud Run
+        Azure Functions
+    Networking
+      Service Mesh
+        Istio
+        Linkerd
+      API Gateway
+        Kong
+        AWS API GW
+      CDN
+        Cloudflare
+        Fastly
+    Data
+      Relational
+        PostgreSQL
+        MySQL
+        CockroachDB
+      NoSQL
+        MongoDB
+        Cassandra
+        DynamoDB
+      Streaming
+        Kafka
+        Kinesis
+        Pulsar
+      Cache
+        Redis
+        Memcached
+    Observability
+      Metrics
+        Prometheus
+        Grafana
+      Logs
+        Loki
+        ELK Stack
+      Traces
+        Jaeger
+        Tempo
+        Zipkin
+    Security
+      Identity
+        Keycloak
+        Auth0
+        Okta
+      Secrets
+        Vault
+        AWS Secrets Manager
+      Policy
+        OPA
+        Kyverno
+    CI/CD
+      Build
+        GitHub Actions
+        GitLab CI
+        Tekton
+      GitOps
+        ArgoCD
+        Flux
+      Artifact
+        Harbor
+        ECR
+        GHCR
+\end{mermaid}
+
+% =============================================================
+\section{Pie Charts}
+% =============================================================
+
+% ── 12. Dev time allocation ───────────────────────────────────
+\begin{mermaid}[
+    type    = pie,
+    theme   = sunset,
+    caption = {Developer time allocation across engineering activities},
+    label   = {fig:devtime},
+    width   = 0.75\linewidth
+]
+pie showData
+    title Developer Time Allocation — Engineering Survey 2026
+    "Feature development"     : 31.4
+    "Bug fixing"              : 18.7
+    "Code review"             : 14.2
+    "Meetings and planning"   : 13.8
+    "Documentation"           :  7.9
+    "Testing"                 :  7.1
+    "Refactoring / tech debt" :  4.5
+    "On-call & incidents"     :  2.4
+\end{mermaid}
+
+% =============================================================
+\section{Git Graphs}
+% =============================================================
+
+Git graphs visualise branching strategy, commit history,
+merges, and release tags — ideal for documenting team workflows.
+
+% ── 13. GitFlow branching strategy ───────────────────────────
+\begin{mermaid}[
+    type    = git,
+    theme   = arctic,
+    caption = {GitFlow branching strategy with feature branches and hotfixes},
+    label   = {fig:gitflow},
+    width   = \linewidth
+]
+gitGraph
+    commit id: "Initial project scaffold"
+    commit id: "Add CI/CD pipeline"
+    commit id: "Configure linting & formatting"
+
+    branch develop
+    checkout develop
+    commit id: "Set up dev environment"
+    commit id: "Add database migrations"
+
+    branch feature/user-auth
+    checkout feature/user-auth
+    commit id: "Add user model"
+    commit id: "JWT middleware"
+    commit id: "Login & register endpoints"
+    commit id: "Password reset flow"
+
+    checkout develop
+    merge feature/user-auth id: "Merge: user auth"
+
+    branch feature/dashboard
+    checkout feature/dashboard
+    commit id: "Dashboard layout"
+    commit id: "Analytics widgets"
+    commit id: "Export to CSV"
+
+    branch feature/payments
+    checkout feature/payments
+    commit id: "Stripe SDK setup"
+    commit id: "Checkout flow"
+    commit id: "Webhooks handler"
+    commit id: "Subscription model"
+
+    checkout develop
+    merge feature/payments id: "Merge: payments"
+    merge feature/dashboard id: "Merge: dashboard"
+    commit id: "Integration test suite"
+
+    checkout main
+    merge develop id: "Release v1.0.0" tag: "v1.0.0"
+
+    branch hotfix/security-patch
+    checkout hotfix/security-patch
+    commit id: "Patch XSS vulnerability" type: HIGHLIGHT
+    commit id: "Add CSP headers"
+
+    checkout main
+    merge hotfix/security-patch id: "Hotfix v1.0.1" tag: "v1.0.1"
+
+    checkout develop
+    merge hotfix/security-patch id: "Backport security fix"
+
+    branch feature/mobile-api
+    checkout feature/mobile-api
+    commit id: "REST API v2 design"
+    commit id: "Pagination & filtering"
+    commit id: "Rate limiting"
+
+    checkout develop
+    merge feature/mobile-api id: "Merge: mobile API"
+    commit id: "Load testing passed"
+    commit id: "Docs updated"
+
+    checkout main
+    merge develop id: "Release v1.1.0" tag: "v1.1.0"
+\end{mermaid}
+
+% =============================================================
+\section{User Journey}
+% =============================================================
+
+% ── 14. E-commerce purchase journey ──────────────────────────
+\begin{mermaid}[
+    type    = journey,
+    theme   = ocean,
+    caption = {Customer journey — discovering and purchasing a product online},
+    label   = {fig:journey},
+    width   = \linewidth
+]
+journey
+    title Customer Purchase Journey — E-commerce Platform
+
+    section Discovery
+        See social media ad      : 3 : Customer
+        Click ad to landing page : 4 : Customer
+        Browse product catalogue : 4 : Customer, System
+        Use search and filters   : 5 : Customer, System
+        View product detail page : 5 : Customer
+
+    section Evaluation
+        Read product description : 4 : Customer
+        Check reviews and ratings: 5 : Customer
+        View photos and video    : 5 : Customer, System
+        Compare with alternatives: 3 : Customer
+        Check delivery estimate  : 4 : Customer, System
+
+    section Purchase
+        Add to cart              : 5 : Customer
+        View cart                : 4 : Customer
+        Enter shipping address   : 3 : Customer
+        Choose delivery option   : 4 : Customer
+        Enter payment details    : 2 : Customer
+        Review and confirm order : 4 : Customer
+        Payment processed        : 5 : Customer, Payment Service
+
+    section Post-Purchase
+        Receive order confirmation email : 5 : Customer, System
+        Track shipment               : 4 : Customer, System
+        Item delivered               : 5 : Customer, Courier
+        Leave review                 : 4 : Customer
+        Contact support (question)   : 2 : Customer, Support
+\end{mermaid}
+
+% =============================================================
+\section{All Themes Side by Side}
+% =============================================================
+
+The same diagram rendered in each of the five built-in themes,
+showing how \pkg{\textbackslash MermaidSetTheme\{\}} switches
+the global default between sections.
+
+% ── 15–19: theme showcase ─────────────────────────────────────
+
+% ocean (already the global default)
+\begin{mermaid}[
+    type    = flowchart,
+    theme   = ocean,
+    caption = {Theme \texttt{ocean} — dark navy with electric-blue accents},
+    label   = {fig:theme-ocean},
+    width   = 0.80\linewidth
+]
+flowchart LR
+    A[/"📥 Input"/] --> B{"Valid?"}
+    B -->|✅ Yes| C[/"⚙️ Process"/] --> D[/"📤 Output"/]
+    B -->|❌ No|  E[/"⚠️ Error"/]  --> F(["🔄 Retry"])
+    F --> A
+\end{mermaid}
+
+\begin{mermaid}[
+    type    = flowchart,
+    theme   = forest,
+    caption = {Theme \texttt{forest} — deep green, natural palette},
+    label   = {fig:theme-forest},
+    width   = 0.80\linewidth
+]
+flowchart LR
+    A[/"📥 Input"/] --> B{"Valid?"}
+    B -->|✅ Yes| C[/"⚙️ Process"/] --> D[/"📤 Output"/]
+    B -->|❌ No|  E[/"⚠️ Error"/]  --> F(["🔄 Retry"])
+    F --> A
+\end{mermaid}
+
+\begin{mermaid}[
+    type    = flowchart,
+    theme   = sunset,
+    caption = {Theme \texttt{sunset} — warm charcoal with amber highlights},
+    label   = {fig:theme-sunset},
+    width   = 0.80\linewidth
+]
+flowchart LR
+    A[/"📥 Input"/] --> B{"Valid?"}
+    B -->|✅ Yes| C[/"⚙️ Process"/] --> D[/"📤 Output"/]
+    B -->|❌ No|  E[/"⚠️ Error"/]  --> F(["🔄 Retry"])
+    F --> A
+\end{mermaid}
+
+\begin{mermaid}[
+    type    = flowchart,
+    theme   = arctic,
+    caption = {Theme \texttt{arctic} — clean white with slate-blue accents},
+    label   = {fig:theme-arctic},
+    width   = 0.80\linewidth
+]
+flowchart LR
+    A[/"📥 Input"/] --> B{"Valid?"}
+    B -->|✅ Yes| C[/"⚙️ Process"/] --> D[/"📤 Output"/]
+    B -->|❌ No|  E[/"⚠️ Error"/]  --> F(["🔄 Retry"])
+    F --> A
+\end{mermaid}
+
+\begin{mermaid}[
+    type    = flowchart,
+    theme   = midnight,
+    caption = {Theme \texttt{midnight} — near-black with violet accents},
+    label   = {fig:theme-midnight},
+    width   = 0.80\linewidth
+]
+flowchart LR
+    A[/"📥 Input"/] --> B{"Valid?"}
+    B -->|✅ Yes| C[/"⚙️ Process"/] --> D[/"📤 Output"/]
+    B -->|❌ No|  E[/"⚠️ Error"/]  --> F(["🔄 Retry"])
+    F --> A
+\end{mermaid}
+
+% =============================================================
+\section{Quick Reference}
+% =============================================================
+
+\subsection{Environment syntax}
+
+\begin{verbatim}
+\begin{mermaid}[
+    type    = <diagram-type>,   % badge label
+    theme   = <theme-name>,     % per-diagram colour theme
+    caption = {Your caption},   % figure caption
+    label   = {fig:key},        % \label key for \ref
+    width   = 0.85\linewidth,   % listing/image width (default)
+    pos     = H,                % float placement
+    image   = {figures/d.pdf},  % if set → image mode
+]
+... mermaid source ...
+\end{mermaid}
+\end{verbatim}
+
+\subsection{Available diagram types}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+\toprule
+\textbf{Option value} & \textbf{Badge} & \textbf{First keyword in source} \\
+\midrule
+\texttt{flowchart} & FLOW  & \texttt{flowchart TD} / \texttt{graph LR} \\
+\texttt{sequence}  & SEQ   & \texttt{sequenceDiagram} \\
+\texttt{gantt}     & GANTT & \texttt{gantt} \\
+\texttt{class}     & CLASS & \texttt{classDiagram} \\
+\texttt{state}     & STATE & \texttt{stateDiagram-v2} \\
+\texttt{er}        & ER    & \texttt{erDiagram} \\
+\texttt{pie}       & PIE   & \texttt{pie} \\
+\texttt{timeline}  & TIME  & \texttt{timeline} \\
+\texttt{mindmap}   & MIND  & \texttt{mindmap} \\
+\texttt{git}       & GIT   & \texttt{gitGraph} \\
+\texttt{journey}   & UX    & \texttt{journey} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Listing of all figures}
+
+\listoffigures
+
+\bigskip
+\MermaidLiveNote
+
+\end{document}
