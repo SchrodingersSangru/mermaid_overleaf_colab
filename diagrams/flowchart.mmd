@@ -1,0 +1,23 @@
+graph TD
+    %% Node Definitions
+    Start([User Edits flowchart.mmd in Overleaf]) --> SyncOverleaf[Sync Project with GitHub]
+    SyncOverleaf --> GitHubPush[Push to GitHub Repository]
+    
+    %% GitHub Actions Pipeline
+    GitHubPush --> GADetect{GitHub Action Triggered?}
+    GADetect -- Yes --> RunPuppeteer[Run Mermaid CLI in Headless Browser]
+    GADetect -- No --> Wait[Wait for next push]
+    
+    RunPuppeteer --> GeneratePNG[Generate crisp high-res PNG in generated/ folder]
+    GeneratePNG --> BotCommit[GitHub Actions Bot commits PNG back to Repo]
+    
+    %% Overleaf Sync
+    BotCommit --> PullOverleaf[Pull changes into Overleaf]
+    PullOverleaf --> RenderLaTeX[LaTeX renders generated/flowchart.png]
+    RenderLaTeX --> End([Document Ready with Updated Diagram!])
+
+    %% Styling
+    classDef primary fill:#2563eb,stroke:#1d4ed8,color:#fff,stroke-width:2px;
+    classDef success fill:#16a34a,stroke:#15803d,color:#fff,stroke-width:2px;
+    class Start,End success;
+    class RunPuppeteer,GeneratePNG primary;
